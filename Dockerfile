@@ -1,4 +1,4 @@
-FROM kong
+FROM kong:centos
 
 #FROM kong:0.14-centos
 
