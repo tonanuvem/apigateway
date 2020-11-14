@@ -9,6 +9,9 @@ volumes:
   keycloak-datastore:
 
 services:
+  #######################################
+  # Postgres: database do Kong
+  #######################################
   kong-db:
     image: postgres:9.6
     volumes:
@@ -16,38 +19,102 @@ services:
     networks:
       - kong-net
     ports:
-      - "15432:5432"
+      - "5432:5432"
     environment:
-      POSTGRES_DB:       api-gw
+      POSTGRES_DB:       kong
       POSTGRES_USER:     kong
-      POSTGRES_PASSWORD: 
+      POSTGRES_PASSWORD: kong
+    restart: always
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "kong"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
-  kong:
-    extra_hosts:
-      - "keycloak-host:keycloak"
-    image: kong
-    depends_on:
-      - kong-db
+  #######################################
+  # Kong migration : preparar o banco de dados
+  #######################################
+  kong-migration:
+    image: kong:1.5
+    command: "kong migrations bootstrap"
     networks:
       - kong-net
+    restart: on-failure
+    environment:
+      KONG_PG_HOST:     kong-db
+      KONG_PG_PASSWORD: kong
+    links:
+      - kong-db
+    depends_on:
+      - kong-db
+
+  #######################################
+  # Kong: API Gateway
+  #######################################
+  kong:
+    image: kong:1.5
+    restart: always
+    networks:
+      - kong-net
+    environment:
+#      KONG_DATABASE:         postgres
+#      KONG_PG_HOST:          kong-db
+#      KONG_PG_PORT:          5432
+#      KONG_PG_DATABASE:      kong   
+      KONG_PG_HOST: kong-db
+      KONG_PG_PASSWORD: kong
+      KONG_PROXY_LISTEN: 0.0.0.0:8000
+      KONG_PROXY_LISTEN_SSL: 0.0.0.0:8443
+      KONG_ADMIN_LISTEN: 0.0.0.0:8001
+#      KONG_PROXY_LISTEN:     0.0.0.0:8000, 0.0.0.0:8443 ssl
+#      KONG_ADMIN_LISTEN:     0.0.0.0:8001, 0.0.0.0:8444 ssl
+      KONG_PLUGINS:          oidc
+      KONG_PROXY_ACCESS_LOG: /dev/stdout
+      KONG_ADMIN_ACCESS_LOG: /dev/stdout
+      KONG_PROXY_ERROR_LOG:  /dev/stderr
+      KONG_ADMIN_ERROR_LOG:  /dev/stderr
+    depends_on:
+      - kong-db
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://kong:8001"]
+      interval: 5s
+      timeout: 2s
+      retries: 15
     ports:
       - "8000:8000" # Listener
       - "8001:8001" # Admin API
       - "8443:8443" # Listener  (SSL)
       - "8444:8444" # Admin API (SSL)
-    environment:
-      KONG_DATABASE:         postgres
-      KONG_PG_HOST:          kong-db
-      KONG_PG_PORT:          5432
-      KONG_PG_DATABASE:      api-gw
-      KONG_PROXY_ACCESS_LOG: /dev/stdout
-      KONG_ADMIN_ACCESS_LOG: /dev/stdout
-      KONG_PROXY_ERROR_LOG:  /dev/stderr
-      KONG_ADMIN_ERROR_LOG:  /dev/stderr
-      KONG_PROXY_LISTEN:     0.0.0.0:8000, 0.0.0.0:8443 ssl
-      KONG_ADMIN_LISTEN:     0.0.0.0:8001, 0.0.0.0:8444 ssl
-      KONG_PLUGINS:          oidc
+    extra_hosts:
+      - "keycloak-host:keycloak"
+      
 
+  #######################################
+  # KONGA: UI para o Kong
+  #######################################
+  konga:
+    image: pantsel/konga
+    restart: always
+    networks:
+      - kong-net
+    environment:
+      KONG_HOST: kong
+      KONG_PORT: 8001
+      TOKEN_SECRET: fiaptoken
+    depends_on:
+      - kong
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://kong:8001"]
+      interval: 5s
+      timeout: 2s
+      retries: 15
+    ports:
+      - "1337:1337"
+
+
+  #######################################
+  # Postgres: database do Keycloak
+  #######################################
   keycloak-db:
     image: postgres:9.6
     volumes: 
@@ -59,8 +126,17 @@ services:
     environment:
       POSTGRES_DB:       keycloak
       POSTGRES_USER:     keycloak
-      POSTGRES_PASSWORD: password
+      POSTGRES_PASSWORD: keycloak
+    restart: always
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "kong"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
+  #######################################
+  # Keycloak : gestão de identidades
+  #######################################
   keycloak:
     image: jboss/keycloak:4.5.0.Final
     depends_on:
@@ -78,4 +154,8 @@ services:
       DB_PASSWORD: password
       KEYCLOAK_USER:     admin
       KEYCLOAK_PASSWORD: admin
-      
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://keycloak:8180"]
+      interval: 5s
+      timeout: 2s
+      retries: 15
