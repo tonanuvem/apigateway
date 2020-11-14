@@ -68,7 +68,7 @@ services:
       KONG_ADMIN_LISTEN: 0.0.0.0:8001
 #      KONG_PROXY_LISTEN:     0.0.0.0:8000, 0.0.0.0:8443 ssl
 #      KONG_ADMIN_LISTEN:     0.0.0.0:8001, 0.0.0.0:8444 ssl
-      KONG_PLUGINS:          oidc
+#      KONG_PLUGINS:          oidc
       KONG_PROXY_ACCESS_LOG: /dev/stdout
       KONG_ADMIN_ACCESS_LOG: /dev/stdout
       KONG_PROXY_ERROR_LOG:  /dev/stderr
@@ -85,8 +85,8 @@ services:
       - "8001:8001" # Admin API
       - "8443:8443" # Listener  (SSL)
       - "8444:8444" # Admin API (SSL)
-    extra_hosts:
-      - "keycloak-host:keycloak"
+#    extra_hosts:
+#      - "keycloak-host:keycloak"
       
 
   #######################################
@@ -148,7 +148,7 @@ services:
     environment:
       DB_VENDOR:   POSTGRES
       DB_ADDR:     keycloak-db
-      DB_PORT:     5432
+      DB_PORT:     25432
       DB_DATABASE: keycloak
       DB_USER:     keycloak
       DB_PASSWORD: password
