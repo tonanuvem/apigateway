@@ -1,11 +1,16 @@
-FROM kong:centos
+# https://hub.docker.com/r/bigga94/kong-oidc/dockerfile
 
-#FROM kong:0.14-centos
+FROM kong
+#FROM kong:centos
 
 LABEL description="Kong + kong-oidc plugin"
 
-#LABEL description="Centos 7 + Kong 0.14 + kong-oidc plugin"
+USER root
+
+ENV KONG_PLUGINS="bundled, oidc"
+RUN luarocks install kong-oidc --local
 
 #RUN yum install -y git unzip && yum clean all
+#RUN luarocks install kong-oidc
 
-RUN luarocks install kong-oidc
+USER kong
