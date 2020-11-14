@@ -2,7 +2,7 @@
 
 #FROM kong
 #FROM kong:1.5.1
-#FROM kong:centos
+FROM kong:centos
 
 LABEL description="Kong + kong-oidc plugin"
 
