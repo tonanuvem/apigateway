@@ -129,7 +129,7 @@ services:
       POSTGRES_PASSWORD: keycloak
     restart: always
     healthcheck:
-      test: ["CMD", "pg_isready", "-U", "kong"]
+      test: ["CMD", "pg_isready", "-U", "keycloak"]
       interval: 5s
       timeout: 5s
       retries: 5
