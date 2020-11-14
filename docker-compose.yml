@@ -18,8 +18,8 @@ services:
       - kong-datastore:/var/lib/postgresql/data
     networks:
       - kong-net
-    ports:
-      - "5432:5432"
+    #ports:
+    #  - "5432:5432"
     environment:
       POSTGRES_DB:       kong
       POSTGRES_USER:     kong
@@ -98,8 +98,6 @@ services:
     networks:
       - kong-net
     environment:
-      KONG_HOST: kong
-      KONG_PORT: 8001
       TOKEN_SECRET: fiaptoken
     depends_on:
       - kong
@@ -121,8 +119,8 @@ services:
       - keycloak-datastore:/var/lib/postgresql/data
     networks:
       - keycloak-net
-    ports:
-      - "25432:5432"
+    #ports:
+    #  - "25432:5432"
     environment:
       POSTGRES_DB:       keycloak
       POSTGRES_USER:     keycloak
