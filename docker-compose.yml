@@ -52,10 +52,10 @@ services:
   # Kong: API Gateway
   #######################################
   kong:
-    #image: kong:1.5
-    build: 
-      context: .
-      dockerfile: ./Dockerfile
+    image: kong
+    #build: 
+    #  context: .
+    #  dockerfile: ./Dockerfile
     restart: always
     networks:
       - kong-net
