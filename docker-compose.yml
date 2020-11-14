@@ -35,8 +35,11 @@ services:
   # Kong migration : preparar o banco de dados
   #######################################
   kong-migration:
-    image: kong
+    #image: kong
     #image: kong:1.5
+    build: 
+      context: .
+      dockerfile: ./Dockerfile
     command: "kong migrations bootstrap"
     networks:
       - kong-net
