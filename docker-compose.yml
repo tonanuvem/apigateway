@@ -148,7 +148,7 @@ services:
     environment:
       DB_VENDOR:   POSTGRES
       DB_ADDR:     keycloak-db
-      DB_PORT:     25432
+      DB_PORT:     5432
       DB_DATABASE: keycloak
       DB_USER:     keycloak
       DB_PASSWORD: keycloak
