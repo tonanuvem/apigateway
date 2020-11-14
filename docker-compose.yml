@@ -154,6 +154,7 @@ services:
       DB_PASSWORD: keycloak
       KEYCLOAK_USER:     admin
       KEYCLOAK_PASSWORD: admin
+    restart: always
     healthcheck:
       test: ["CMD", "curl", "-f", "http://keycloak:8180"]
       interval: 5s
