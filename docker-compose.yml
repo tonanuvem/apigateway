@@ -151,7 +151,7 @@ services:
       DB_PORT:     25432
       DB_DATABASE: keycloak
       DB_USER:     keycloak
-      DB_PASSWORD: password
+      DB_PASSWORD: keycloak
       KEYCLOAK_USER:     admin
       KEYCLOAK_PASSWORD: admin
     healthcheck:
