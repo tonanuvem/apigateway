@@ -170,8 +170,8 @@ services:
         - /bin/sh
         - -c
         - |
-          keycloak/bin/kcadm.sh config credentials --server http://localhost:8080/auth --realm master --user admin
-          keycloak/bin/kcadm.sh update realms/master -s sslRequired=NONE
+          keycloak/bin/kcadm.sh config credentials --server http://localhost:8080/auth --realm master --user admin --password admin
+          keycloak/bin/kcadm.sh update realms/master -s sslRequired=NONE --user admin --password admin
           /opt/jboss/tools/docker-entrypoint.sh
 
 
