@@ -9,3 +9,5 @@ Fonte:
 > https://www.jerney.io/secure-apis-kong-keycloak-1/
 
 > https://github.com/jerneyio/kong-keycloak-mobile-demo/tree/master
+
+> https://ncarlier.gitbooks.io/oss-api-management/content/howto-kong_with_keycloak.html
