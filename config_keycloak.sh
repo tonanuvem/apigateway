@@ -4,14 +4,14 @@ while [[ "$$(curl --connect-timeout 2 -s -o /dev/null -w ''%{http_code}'' http:/
 done 
 echo "Keycloak is up"
 
-docker-compose exec keycloak keycloak/bin/kcadm.sh config credentials --server http://localhost:8080/auth --realm master --user admin --password admin
-docker-compose exec keycloak keycloak/bin/kcadm.sh update realms/master -s sslRequired=NONE --user admin --password admin
+# docker-compose exec keycloak keycloak/bin/kcadm.sh config credentials --server http://localhost:8080/auth --realm master --user admin --password admin
+# docker-compose exec keycloak keycloak/bin/kcadm.sh update realms/master -s sslRequired=NONE --user admin --password admin
 
 HOST_IP=$(curl checkip.amazonaws.com)
 echo $HOST_IP
 
 # CLIENT_SECRET=<client_secret_from_keycloak>
-echo "Digite o secret do kong"
+echo "Digite o secret do Kong:"
 read CLIENT_SECRET
 
 curl -s -X POST http://localhost:8001/plugins \
