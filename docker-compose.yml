@@ -166,12 +166,12 @@ services:
       interval: 5s
       timeout: 2s
       retries: 15
-    command:
-        - /bin/sh
-        - -c
-        - |
-          keycloak/bin/kcadm.sh config credentials --server http://localhost:8080/auth --realm master --user admin --password admin
-          keycloak/bin/kcadm.sh update realms/master -s sslRequired=NONE --user admin --password admin
-          /opt/jboss/tools/docker-entrypoint.sh
+#    command:
+#        - /bin/sh
+#        - -c
+#        - |
+#          keycloak/bin/kcadm.sh config credentials --server http://localhost:8080/auth --realm master --user admin --password admin
+#          keycloak/bin/kcadm.sh update realms/master -s sslRequired=NONE --user admin --password admin
+#          /opt/jboss/tools/docker-entrypoint.sh
 
 
