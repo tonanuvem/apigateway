@@ -4,3 +4,9 @@ echo "Keycloak is up"
 
 docker-compose exec keycloak keycloak/bin/kcadm.sh config credentials --server http://localhost:8080/auth --realm master --user admin --password admin
 docker-compose exec keycloak keycloak/bin/kcadm.sh update realms/master -s sslRequired=NONE --user admin --password admin
+
+IP=$(curl checkip.amazonaws.com) 
+echo "URLs do projeto:"
+echo ""
+echo " - KEYCLOAK Administration   : http://$IP:8180/"
+echo ""
