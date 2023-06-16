@@ -3,9 +3,9 @@ docker run --name green -p 8082:80 -d tonanuvem/fiap_page:green
 
 ## BLUE GREEN
 curl -X POST http://localhost:8001/services/ --data "name=bluegreen-aluno" --data "url=http://$IP:8081"
-curl -i -X POST --url http://localhost:8001/services/bluegreen-aluno/routes --data "hosts[]=aluno.$IP.nip.io"
+curl -i -X POST --url http://localhost:8001/services/bluegreen-aluno/routes --data "hosts[]=aluno.$IP.sslip.io"
 curl -X POST http://localhost:8001/services/ --data "name=bluegreen-prof" --data "url=http://$IP:8082"
-curl -i -X POST --url http://localhost:8001/services/bluegreen-prof/routes --data "hosts[]=prof.$IP.nip.io"
+curl -i -X POST --url http://localhost:8001/services/bluegreen-prof/routes --data "hosts[]=prof.$IP.sslip.io"
 IP=$(curl checkip.amazonaws.com) 
 
 ## CANARY
