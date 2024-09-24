@@ -1,5 +1,9 @@
 #!/bin/bash
+echo ""
+echo "Configurando o Keycloak:"
+echo ""
 bash -c 'while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' http://localhost:8180/admin/master/console/)" != "200" ]]; do echo .; sleep 5; done'
+echo ""
 echo "Keycloak is up"
 
 docker-compose exec keycloak opt/keycloak/bin/kcadm.sh config credentials --server http://localhost:8080 --realm master --user admin --password admin
