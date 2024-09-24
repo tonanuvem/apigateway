@@ -1,5 +1,5 @@
 #!/bin/bash
-bash -c 'while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' localhost:8180)" != "200" ]]; do echo .; sleep 5; done'
+bash -c 'while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' localhost:8180)" != "302" ]]; do echo .; sleep 5; done'
 echo "Keycloak is up"
 
 HOST_IP=$(curl checkip.amazonaws.com)
