@@ -2,7 +2,7 @@
 echo ""
 echo "Configurando o Keycloak:"
 echo ""
-bash -c 'while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' http://localhost:8180/admin/master/console/)" != "200" ]]; do printf .; sleep 5; done'
+bash -c 'while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' http://localhost:8180/admin/master/console/)" != "200" ]]; do printf "."; sleep 5; done'
 echo ""
 echo "Keycloak is up"
 
