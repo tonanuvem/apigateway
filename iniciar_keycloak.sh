@@ -3,9 +3,9 @@ docker-compose ps
 
 docker-compose up -d keycloak
 docker-compose ps
-echo ""
-echo "Config OK"
-echo ""
+
+sh config_keycloak.sh
+
 IP=$(curl -s checkip.amazonaws.com)
 echo ""
 echo "URLs do projeto:"
