@@ -13,5 +13,6 @@ curl -s -X POST http://localhost:8001/plugins \
   -d name=oidc \
   -d config.client_id=kong \
   -d config.client_secret=${CLIENT_SECRET} \
-  -d config.discovery=http://${HOST_IP}:8180/auth/realms/master/.well-known/openid-configuration \
+ # -d config.discovery=http://${HOST_IP}:8180/auth/realms/master/.well-known/openid-configuration \
+  -d config.discovery=http://${HOST_IP}:8180/realms/master/protocol/openid-connect/auth
   | python -mjson.tool
