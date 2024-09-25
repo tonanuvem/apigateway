@@ -1,4 +1,4 @@
-IP=$(curl checkip.amazonaws.com) 
+IP=$(curl -s checkip.amazonaws.com) 
 echo "URLs do projeto:"
 echo ""
 echo " - LOGIN       : http://$IP.sslip.io:8000"
