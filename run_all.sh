@@ -4,6 +4,8 @@ docker run --name login -p 8070:80 -d tonanuvem/login
 docker run --name blue -p 8081:80 -d tonanuvem/fiap_page:blue
 docker run --name green -p 8082:80 -d tonanuvem/fiap_page:green
 
+docker run --name clientes -p 5000:5000 -d tonanuvem/clientes-microservice
+
 IP=$(curl checkip.amazonaws.com) 
 
 ## NOTIFICACAO
@@ -30,6 +32,7 @@ curl -X POST http://localhost:8001/upstreams/notificacao.upstream/targets --data
 curl -X POST http://localhost:8001/upstreams/notificacao.upstream/targets --data "target=$IP:8082" --data "weight=30" 
 
 ## URLs:
+sh criar_rota_clientes.sh.sh
 sh notificacao.sh
 sh bluegreen.sh
 sh canary.sh
