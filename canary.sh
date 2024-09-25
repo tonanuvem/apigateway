@@ -1,4 +1,4 @@
-IP=$(curl checkip.amazonaws.com) 
+IP=$(curl -s checkip.amazonaws.com) 
 echo "URLs do projeto:"
 echo ""
 echo " - CANARY (% percentual)  : http://$IP:8000/notificacao/canary"
