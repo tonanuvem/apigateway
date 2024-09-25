@@ -1,7 +1,7 @@
 IP=$(curl -s checkip.amazonaws.com) 
 echo "URLs do projeto:"
 echo ""
-echo " - LOGIN       : http://$IP.sslip.io:8000"
+echo " - LOGIN  (BLUE/GREEN)   : http://$IP.sslip.io:8000"
 echo ""
 echo ""
 # echo "Observação, a página de Login direciona para as URLs abaixo:"
