@@ -1,8 +1,14 @@
+docker run --name notificacao -p 8080:80 -d tonanuvem/fiap_page
+
 docker run --name login -p 8070:80 -d tonanuvem/login
 docker run --name blue -p 8081:80 -d tonanuvem/fiap_page:blue
 docker run --name green -p 8082:80 -d tonanuvem/fiap_page:green
 
 IP=$(curl checkip.amazonaws.com) 
+
+## NOTIFICACAO
+curl -i -X POST --url http://localhost:8001/services/ --data 'name=notificacao' --data "url=http://$IP:8080"
+curl -i -X POST --url http://localhost:8001/services/notificacao/routes --data 'paths[]=/notificacao/v1'
 
 ## BLUE GREEN
 # LOGIN
@@ -24,5 +30,6 @@ curl -X POST http://localhost:8001/upstreams/notificacao.upstream/targets --data
 curl -X POST http://localhost:8001/upstreams/notificacao.upstream/targets --data "target=$IP:8082" --data "weight=30" 
 
 ## URLs:
+sh notificacao.sh
 sh bluegreen.sh
 sh canary.sh
