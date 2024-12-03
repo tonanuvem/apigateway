@@ -32,7 +32,7 @@ curl -X POST http://localhost:8001/upstreams/notificacao.upstream/targets --data
 curl -X POST http://localhost:8001/upstreams/notificacao.upstream/targets --data "target=$IP:8082" --data "weight=30" 
 
 ## URLs:
-sh criar_rota_clientes.sh.sh
+sh criar_rota_clientes.sh
 sh notificacao.sh
 sh bluegreen.sh
 sh canary.sh
