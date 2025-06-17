@@ -12,7 +12,13 @@ USER root
 #RUN luarocks install kong-oidc --local
 
 RUN yum install -y git unzip && yum clean all
-RUN luarocks install kong-oidc
+
+# RUN luarocks install kong-oidc
+RUN git clone https://github.com/nokia/kong-oidc /tmp/kong-oidc \
+ && cd /tmp/kong-oidc \
+ && luarocks make kong-oidc-*.rockspec \
+ && rm -rf /tmp/kong-oidc
+ 
 #RUN luarocks install kong-plugin-api-key-access-control
 
 USER kong
