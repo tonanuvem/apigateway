@@ -36,10 +36,10 @@ services:
   #######################################
   kong-migration:
     #image: kong
-    #image: kong:1.5
-    build: 
-      context: .
-      dockerfile: ./Dockerfile
+    image: tonanuvem/apigateway-kong-migration
+    #build: 
+    #  context: .
+    #  dockerfile: ./Dockerfile
     command: "kong migrations bootstrap"
     networks:
       - kong-net
@@ -57,10 +57,10 @@ services:
   #######################################
   kong:
     #image: kong
-    #image: kong:1.5
-    build: 
-      context: .
-      dockerfile: ./Dockerfile
+    image: tonanuvem/apigateway-kong
+    #build: 
+    #  context: .
+    #  dockerfile: ./Dockerfile
     restart: always
     networks:
       - kong-net
