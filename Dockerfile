@@ -39,9 +39,15 @@ RUN cd /tmp && \
     unzip session.zip && \
     cd lua-resty-session-2.26 && \
     cp -r lib/resty/* /usr/local/share/lua/5.1/resty/ && \
+    # Instalar lua-resty-hmac
+    cd /tmp && \
+    curl -L https://github.com/jkeys089/lua-resty-hmac/archive/refs/heads/master.zip -o hmac.zip && \
+    unzip hmac.zip && \
+    cd lua-resty-hmac-master && \
+    cp -r lib/resty/* /usr/local/share/lua/5.1/resty/ && \
     # Limpeza
     cd / && rm -rf /tmp/*
-
+    
 # RUN luarocks install kong-oidc
 
 USER kong
